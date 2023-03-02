@@ -1,0 +1,57 @@
+#US Car Prices Dataset
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+#import csv file
+car_prices = pd.read_csv("data/car_prices.csv")
+car_prices
+
+#prepare data
+X = car_prices.drop(["make","model","color","state","date"],axis=1)
+y = car_prices["mileage"]
+#split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size = 0.25, random_state = 48 #set.seed()
+)
+#Row and Column
+X_train.shape 
+
+#Linear
+from sklearn.linear_model import LinearRegression
+#train model
+car_prices = LinearRegression()
+car_prices.fit(X_train, y_train)
+#test model
+p_car = car_prices.predict(X_test)
+print(p_car)
+
+#Model evaluation
+car_prices.score(X_test,y_test)
+
+
+#Random Forest
+from sklearn.ensemble import RandomForestRegressor
+tree_model = RandomForestRegressor()
+#train model
+tree_model.fit(X_train, y_train)
+#test model
+p = tree_model.predict(X_test)
+print(p)
+
+#Model evaluation
+car_test_r2 = tree_model.score(X_test, y_test)
+print(car_test_r2)
+
+
+#Decision Tree
+from sklearn.tree import DecisionTreeRegressor
+Dec_tree_model = DecisionTreeRegressor()
+#train model
+Dec_tree_model.fit(X_train, y_train)
+#test model
+p = Dec_tree_model.predict(X_test)
+print(p)
+
+#Model evaluation
+car_test_r2 = Dec_tree_model.score(X_test, y_test)
+print(car_test_r2)
